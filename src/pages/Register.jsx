@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   loginStart,
   loginFailure,
+  authReady,
   clearError,
 } from "../store/slices/authSlice";
 import { getDashboardPath } from "../utils/roleRoutes";
@@ -81,6 +82,7 @@ const Register = () => {
         password: form.password,
         role: form.role,
       });
+      dispatch(authReady());
       // Redirect to login page after successful registration
       navigate("/login", {
         replace: true,
