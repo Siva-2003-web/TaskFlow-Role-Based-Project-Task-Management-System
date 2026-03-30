@@ -1,5 +1,5 @@
 # Netlify proxy for backend API (replace with your actual Render URL)
-/api/*  https://your-api.onrender.com/api/:splat  200
+/api/*  https://taskflow-role-based-project-task-v6bn.onrender.com/api/:splat  200
 
 # SPA fallback
 /*      /index.html                               200
