@@ -1,0 +1,224 @@
+/* ═══════════════════════════════════════════
+   403 Forbidden Page
+   ═══════════════════════════════════════════ */
+
+.forbidden-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Background */
+.forbidden-bg-gradient {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 30%,
+      rgba(239, 68, 68, 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse at 70% 80%,
+      rgba(99, 102, 241, 0.04) 0%,
+      transparent 50%
+    ),
+    var(--color-bg);
+  z-index: 0;
+}
+
+.forbidden-bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  z-index: 0;
+  animation: orb-float-forbidden 14s ease-in-out infinite;
+}
+
+.forbidden-bg-orb--1 {
+  width: 350px;
+  height: 350px;
+  background: rgba(239, 68, 68, 0.1);
+  top: 10%;
+  left: 15%;
+}
+
+.forbidden-bg-orb--2 {
+  width: 250px;
+  height: 250px;
+  background: rgba(245, 158, 11, 0.08);
+  bottom: 10%;
+  right: 15%;
+  animation-delay: -6s;
+}
+
+@keyframes orb-float-forbidden {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -15px) scale(1.03);
+  }
+  66% {
+    transform: translate(-15px, 10px) scale(0.97);
+  }
+}
+
+/* Card */
+.forbidden-card {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  padding: 3rem 2.5rem;
+  background: rgba(30, 41, 59, 0.6);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(239, 68, 68, 0.05);
+}
+
+/* Shield icon */
+.forbidden-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 50%;
+  color: #f87171;
+  padding: 16px;
+  animation: pulse-forbidden 2.5s ease-in-out infinite;
+}
+
+.forbidden-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes pulse-forbidden {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+  }
+}
+
+/* 403 code */
+.forbidden-code {
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #f87171, #ef4444, #dc2626);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.forbidden-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+
+.forbidden-desc {
+  color: var(--color-text-dim);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Buttons */
+.forbidden-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.forbidden-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  border: none;
+}
+
+.forbidden-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.forbidden-btn--primary {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: white;
+}
+
+.forbidden-btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.forbidden-btn--ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.forbidden-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: var(--color-text);
+}
+
+/* Role info */
+.forbidden-role-info {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.forbidden-role-badge {
+  padding: 0.2rem 0.625rem;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-light);
+  font-weight: 600;
+  text-transform: capitalize;
+}

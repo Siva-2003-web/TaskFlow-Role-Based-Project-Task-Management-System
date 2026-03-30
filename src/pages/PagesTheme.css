@@ -1,0 +1,278 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* Unified modern skin for all in-app pages */
+.dashboard,
+.users-page,
+.projects-page,
+.mp-page,
+.mt-page,
+.ed-page,
+.ep-page,
+.et-page {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(1rem, 1.2vw, 1.35rem);
+  animation: pageEnter 0.45s ease both;
+}
+
+.dashboard::before,
+.users-page::before,
+.projects-page::before,
+.mp-page::before,
+.mt-page::before,
+.ed-page::before,
+.ep-page::before,
+.et-page::before {
+  content: "";
+  position: absolute;
+  inset: -16px -10px auto -10px;
+  height: 180px;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgba(229, 107, 53, 0.13) 0%,
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(25, 135, 122, 0.11) 0%,
+      transparent 52%
+    );
+}
+
+.dashboard > *,
+.users-page > *,
+.projects-page > *,
+.mp-page > *,
+.mt-page > *,
+.ed-page > *,
+.ep-page > *,
+.et-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dashboard-header__title,
+.users-header__title,
+.projects-header__title,
+.mp-header__title,
+.mt-header__title,
+.ed-hero__title,
+.ep-header__title,
+.et-header__title {
+  font-family: "DM Serif Display", Georgia, serif;
+  letter-spacing: 0.01em;
+  font-weight: 400;
+  color: #f8fafc;
+}
+
+.dashboard-header__subtitle,
+.users-header__subtitle,
+.projects-header__subtitle,
+.mp-header__sub,
+.mt-header__sub,
+.ed-hero__sub,
+.ep-header__sub,
+.et-header__sub {
+  color: #b4c0d3;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+.dashboard-stats .stat-card,
+.users-stat,
+.project-card,
+.mp-stat,
+.mp-card,
+.mt-progress-panel,
+.mt-board__col,
+.mt-board__card,
+.ed-stat,
+.ed-project-card,
+.et-group,
+.ep-project-card,
+.users-table-wrap,
+.users-empty,
+.dashboard-progress,
+.dashboard-section,
+.dashboard-subsection {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(124, 145, 184, 0.28);
+  box-shadow:
+    0 12px 26px rgba(7, 12, 22, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.dashboard-stats .stat-card,
+.users-stat,
+.project-card,
+.mp-stat,
+.mp-card,
+.mt-progress-panel,
+.mt-board__col,
+.mt-board__card,
+.ed-stat,
+.ed-project-card,
+.et-group,
+.ep-project-card,
+.users-table-wrap,
+.dashboard-progress {
+  background: linear-gradient(
+    165deg,
+    rgba(20, 30, 49, 0.82) 0%,
+    rgba(18, 26, 42, 0.68) 100%
+  );
+}
+
+.users-toolbar,
+.projects-toolbar,
+.mp-toolbar,
+.mt-toolbar,
+.ep-toolbar,
+.et-toolbar {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.3rem;
+  border-radius: 14px;
+  background: rgba(12, 20, 34, 0.34);
+  border: 1px solid rgba(108, 128, 162, 0.24);
+}
+
+.users-search__input,
+.form-input,
+.form-select,
+.mt-board__card select,
+.et-status-select {
+  border-radius: 12px;
+  border-color: rgba(112, 133, 168, 0.42);
+  background: rgba(13, 20, 35, 0.78);
+  color: #e7eefb;
+}
+
+.users-search__input:focus,
+.form-input:focus,
+.form-select:focus,
+.et-status-select:focus {
+  border-color: rgba(245, 126, 62, 0.7);
+  box-shadow: 0 0 0 4px rgba(229, 107, 53, 0.18);
+}
+
+.users-search__icon {
+  color: #90a0b8;
+}
+
+.btn {
+  border-radius: 12px;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  font-weight: 700;
+}
+
+.btn--primary {
+  background: linear-gradient(140deg, #e56b35 0%, #bc451f 100%);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 10px 20px rgba(201, 82, 35, 0.35);
+}
+
+.btn--ghost {
+  background: rgba(15, 23, 38, 0.6);
+  border: 1px solid rgba(117, 137, 168, 0.35);
+  color: #d2ddf0;
+}
+
+.users-table thead {
+  background: rgba(10, 17, 30, 0.78);
+}
+
+.users-table tbody tr:hover {
+  background: rgba(229, 107, 53, 0.08);
+}
+
+.project-card:hover,
+.mp-card:hover,
+.mt-board__card:hover,
+.ed-project-card:hover,
+.ep-project-card:hover {
+  border-color: rgba(234, 124, 65, 0.44);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 30px rgba(9, 15, 29, 0.35),
+    0 0 0 1px rgba(229, 107, 53, 0.2);
+}
+
+.project-card,
+.mp-card,
+.mt-board__card,
+.ed-project-card,
+.ep-project-card {
+  transition:
+    transform 0.18s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+
+.project-card__progress-fill,
+.mp-progress__fill,
+.mt-progress-panel__fill,
+.ed-project-card__bar-fill,
+.ep-project-card__progress-fill,
+.dashboard-progress__fill {
+  background: linear-gradient(90deg, #f0783a 0%, #1fa287 100%);
+}
+
+.users-empty,
+.users-loading,
+.users-error,
+.dashboard-empty,
+.et-group__header,
+.mt-board__col-header,
+.ed-hero,
+.ep-header {
+  border-radius: 14px;
+}
+
+.forbidden-card {
+  border-color: rgba(229, 107, 53, 0.3);
+  box-shadow:
+    0 20px 40px rgba(4, 7, 16, 0.42),
+    0 0 30px rgba(229, 107, 53, 0.12);
+}
+
+@media (max-width: 768px) {
+  .dashboard,
+  .users-page,
+  .projects-page,
+  .mp-page,
+  .mt-page,
+  .ed-page,
+  .ep-page,
+  .et-page {
+    padding: 0.7rem;
+  }
+
+  .users-toolbar,
+  .projects-toolbar,
+  .mp-toolbar,
+  .mt-toolbar,
+  .ep-toolbar,
+  .et-toolbar {
+    padding: 0.5rem;
+  }
+}
