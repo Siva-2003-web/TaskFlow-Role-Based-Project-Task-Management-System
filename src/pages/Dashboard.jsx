@@ -102,10 +102,6 @@ const Dashboard = () => {
     completed: tasks.filter((t) => t.status === "completed").length,
   };
 
-  const completionPct = taskStats.total
-    ? Math.round((taskStats.completed / taskStats.total) * 100)
-    : 0;
-
   return (
     <div className="dashboard animate-fade-in">
       <div className="dashboard-header">
@@ -243,114 +239,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
-          {/* Tasks Stats */}
-          <div className="dashboard-subsection">
-            <h3 className="dashboard-subsection__title">Tasks</h3>
-            <div className="dashboard-stats">
-              <div className="stat-card">
-                <div className="stat-card__icon stat-card__icon--blue">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                </div>
-                <div className="stat-card__info">
-                  <span className="stat-card__value">{taskStats.total}</span>
-                  <span className="stat-card__label">Total Tasks</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-card__icon stat-card__icon--gray">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="12" x2="12" y1="8" y2="12" />
-                    <line x1="12" x2="12.01" y1="16" y2="16" />
-                  </svg>
-                </div>
-                <div className="stat-card__info">
-                  <span className="stat-card__value">{taskStats.pending}</span>
-                  <span className="stat-card__label">Pending</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-card__icon stat-card__icon--amber">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <div className="stat-card__info">
-                  <span className="stat-card__value">
-                    {taskStats.inProgress}
-                  </span>
-                  <span className="stat-card__label">In Progress</span>
-                </div>
-              </div>
-
-              <div className="stat-card">
-                <div className="stat-card__icon stat-card__icon--green">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </div>
-                <div className="stat-card__info">
-                  <span className="stat-card__value">
-                    {taskStats.completed}
-                  </span>
-                  <span className="stat-card__label">Completed</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Completion Progress */}
-            <div className="dashboard-progress">
-              <div className="dashboard-progress__header">
-                <span className="dashboard-progress__title">
-                  Overall Completion
-                </span>
-                <span className="dashboard-progress__pct">
-                  {completionPct}%
-                </span>
-              </div>
-              <div className="dashboard-progress__bar">
-                <div
-                  className="dashboard-progress__fill"
-                  style={{ width: `${completionPct}%` }}
-                />
-              </div>
-            </div>
-          </div>
         </div>
       )}
 
@@ -440,8 +328,7 @@ const Dashboard = () => {
       {/* Empty state */}
       {user?.role === "admin" &&
         userStats.total === 0 &&
-        projectStats.total === 0 &&
-        taskStats.total === 0 && (
+        projectStats.total === 0 && (
           <div className="dashboard-empty">
             <div className="dashboard-empty__icon">
               <svg
@@ -462,8 +349,8 @@ const Dashboard = () => {
               Welcome to TaskFlow Admin
             </h2>
             <p className="dashboard-empty__desc">
-              Start by creating users, projects, and tasks. Use the sidebar
-              navigation to manage system resources.
+              Start by creating users and projects. Use the sidebar navigation
+              to manage system resources.
             </p>
           </div>
         )}
