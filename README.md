@@ -9,8 +9,8 @@ TaskFlow is a full-stack task and project management app with role-based access 
 
 ## Hosting Stack (Free)
 
-- Frontend: Netlify
-- Backend API: Render
+- Frontend: Railway
+- Backend API: Railway
 - Database: Neon PostgreSQL
 
 For full production setup steps, see [DEPLOYMENT.md](DEPLOYMENT.md).
@@ -79,7 +79,7 @@ JWT_SECRET=taskflow_super_secret_change_me
 JWT_EXPIRES_IN=1d
 ```
 
-For production env vars on Render + Neon, see [DEPLOYMENT.md](DEPLOYMENT.md).
+For production env vars on Railway + Neon, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## Installation
 
@@ -241,8 +241,7 @@ Common status codes:
 
 ## Deployment
 
-- Recommended free deployment:
-  - Netlify (frontend)
-  - Render (backend)
+- Recommended free deployment stack:
+  - Railway (frontend & backend)
   - Neon (PostgreSQL)
 - Full deployment instructions: [DEPLOYMENT.md](DEPLOYMENT.md)

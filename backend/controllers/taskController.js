@@ -6,6 +6,8 @@ const mapTaskForClient = (row) => ({
   _id: row.id,
   project: row.project_id,
   assignee: row.assigned_to,
+  dueDate: row.due_date,
+  priority: row.priority || "medium",
 });
 
 const getProjectById = async (projectId) => {
@@ -54,7 +56,7 @@ export const listTasks = async (req, res, next) => {
 
     if (role === "admin") {
       const result = await pool.query(
-        `SELECT t.id, t.title, t.description, t.status, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
+        `SELECT t.id, t.title, t.description, t.status, t.priority, t.due_date, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
          FROM tasks t
          LEFT JOIN users u ON u.id = t.assigned_to
          ORDER BY t.created_at DESC`,
@@ -64,7 +66,7 @@ export const listTasks = async (req, res, next) => {
 
     if (role === "manager") {
       const result = await pool.query(
-        `SELECT t.id, t.title, t.description, t.status, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
+        `SELECT t.id, t.title, t.description, t.status, t.priority, t.due_date, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
          FROM tasks t
          JOIN projects p ON p.id = t.project_id
          LEFT JOIN users u ON u.id = t.assigned_to
@@ -77,7 +79,7 @@ export const listTasks = async (req, res, next) => {
 
     const targetAssignee = assigneeFilter || userId;
     const result = await pool.query(
-      `SELECT t.id, t.title, t.description, t.status, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
+      `SELECT t.id, t.title, t.description, t.status, t.priority, t.due_date, t.project_id, t.assigned_to, t.created_at, u.name AS assigned_user_name
        FROM tasks t
        LEFT JOIN users u ON u.id = t.assigned_to
        WHERE t.assigned_to = $1
@@ -97,7 +99,7 @@ export const getTask = async (req, res, next) => {
     const { role, id: userId } = req.user;
 
     const result = await pool.query(
-      `SELECT t.id, t.title, t.description, t.status, t.project_id, t.assigned_to, t.created_at
+      `SELECT t.id, t.title, t.description, t.status, t.priority, t.due_date, t.project_id, t.assigned_to, t.created_at
        FROM tasks t
        WHERE t.id = $1`,
       [taskId],
@@ -147,6 +149,8 @@ export const listProjectTasks = async (req, res, next) => {
          t.title,
          t.description,
          t.status,
+         t.priority,
+         t.due_date,
          t.project_id,
          t.assigned_to,
          t.created_at,
@@ -186,7 +190,8 @@ export const createTask = async (req, res, next) => {
 export const createTaskForProject = async (req, res, next) => {
   try {
     const projectId = req.params.id;
-    const { title, description, assignedTo, status } = req.body;
+    const { title, description, assignedTo, status, priority, dueDate } =
+      req.body;
 
     if (!title) {
       return next(createHttpError(400, "Task title is required"));
@@ -214,13 +219,15 @@ export const createTaskForProject = async (req, res, next) => {
     }
 
     const result = await pool.query(
-      `INSERT INTO tasks (title, description, status, project_id, assigned_to)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, title, description, status, project_id, assigned_to, created_at`,
+      `INSERT INTO tasks (title, description, status, priority, due_date, project_id, assigned_to)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)
+       RETURNING id, title, description, status, priority, due_date, project_id, assigned_to, created_at`,
       [
         title,
         description || null,
         status || "pending",
+        priority || "medium",
+        dueDate || null,
         projectId,
         assignedTo || null,
       ],
@@ -238,10 +245,16 @@ export const createTaskForProject = async (req, res, next) => {
 export const updateTask = async (req, res, next) => {
   try {
     const taskId = req.params.id;
-    const { title, description } = req.body;
+    const { title, description, priority, dueDate } = req.body;
     const assignedTo = req.body.assignedTo ?? req.body.assignee;
 
-    if (!title && description === undefined && assignedTo === undefined) {
+    if (
+      !title &&
+      description === undefined &&
+      assignedTo === undefined &&
+      priority === undefined &&
+      dueDate === undefined
+    ) {
       return next(
         createHttpError(400, "At least one field is required to update"),
       );
@@ -275,13 +288,22 @@ export const updateTask = async (req, res, next) => {
     const nextDescription = description ?? currentTask.description;
     const nextAssignedTo =
       assignedTo === undefined ? currentTask.assigned_to : assignedTo;
+    const nextPriority = priority ?? currentTask.priority;
+    const nextDueDate = dueDate === undefined ? currentTask.due_date : dueDate;
 
     const updatedResult = await pool.query(
       `UPDATE tasks
-       SET title = $1, description = $2, assigned_to = $3
-       WHERE id = $4
-       RETURNING id, title, description, status, project_id, assigned_to, created_at`,
-      [nextTitle, nextDescription, nextAssignedTo, taskId],
+       SET title = $1, description = $2, assigned_to = $3, priority = $4, due_date = $5
+       WHERE id = $6
+       RETURNING id, title, description, status, priority, due_date, project_id, assigned_to, created_at`,
+      [
+        nextTitle,
+        nextDescription,
+        nextAssignedTo,
+        nextPriority,
+        nextDueDate,
+        taskId,
+      ],
     );
 
     return res.status(200).json({

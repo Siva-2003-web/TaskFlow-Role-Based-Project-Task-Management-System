@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS tasks (
   title VARCHAR(200) NOT NULL,
   description TEXT,
   status VARCHAR(30) NOT NULL DEFAULT 'pending',
+  priority VARCHAR(30) NOT NULL DEFAULT 'medium',
+  due_date TIMESTAMP WITH TIME ZONE,
   project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
   assigned_to UUID REFERENCES users(id) ON DELETE SET NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()

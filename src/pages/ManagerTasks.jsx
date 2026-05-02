@@ -26,6 +26,7 @@ const EMPTY_TASK = {
   assignee: "",
   status: "pending",
   priority: "medium",
+  dueDate: "",
 };
 const STATUS_LIST = ["pending", "in-progress", "review", "completed"];
 const PRIORITY_LIST = ["low", "medium", "high", "urgent"];
@@ -156,6 +157,7 @@ const ManagerTasks = () => {
       assignee: task.assignee?._id || task.assignee || "",
       status: task.status || "pending",
       priority: task.priority || "medium",
+      dueDate: task.dueDate ? task.dueDate.slice(0, 10) : "",
     });
     setFormErrors({});
     setEditingId(task._id);
@@ -271,6 +273,15 @@ const ManagerTasks = () => {
       {priority || "medium"}
     </span>
   );
+
+  const formatDueDate = (dateStr) => {
+    if (!dateStr) return null;
+    return new Date(dateStr).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   // Progress percentage
   const completionPct = stats.total
@@ -535,6 +546,14 @@ const ManagerTasks = () => {
                     {t.description && (
                       <div className="mt-task-desc">{t.description}</div>
                     )}
+                    {t.dueDate && (
+                      <div
+                        className="mt-task-desc"
+                        style={{ marginTop: "0.25rem" }}
+                      >
+                        Due: {formatDueDate(t.dueDate)}
+                      </div>
+                    )}
                   </td>
                   <td>
                     <span className="mt-project-tag">
@@ -656,6 +675,14 @@ const ManagerTasks = () => {
                       <h4 className="mt-board__card-title">{t.title}</h4>
                       {t.description && (
                         <p className="mt-board__card-desc">{t.description}</p>
+                      )}
+                      {t.dueDate && (
+                        <p
+                          className="mt-board__card-desc"
+                          style={{ marginTop: "0.25rem" }}
+                        >
+                          Due: {formatDueDate(t.dueDate)}
+                        </p>
                       )}
                       <div className="mt-board__card-footer">
                         <span className="mt-project-tag">
@@ -806,6 +833,18 @@ const ManagerTasks = () => {
                 ))}
               </select>
             </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Due Date</label>
+            <input
+              className="form-input"
+              type="date"
+              name="dueDate"
+              value={form.dueDate}
+              onChange={handleChange}
+              disabled={formLoading}
+            />
           </div>
 
           <div className="form-actions">
